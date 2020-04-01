@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.algamoney.algamoneyapi.pessoa.model.Pessoa;
@@ -22,12 +25,13 @@ public class PessoaService {
 		this.pessoaRepository = pessoaRepository;
 	}
 
-	public List<PessoaVO> listarPessoas() {
-		List<Pessoa> pessoas = pessoaRepository.findAll();
-		
-		return traduzirPessoaListToVOList(pessoas);
+	public Page<PessoaVO> listarPessoas(@Nullable String nome, Pageable pageable) {
+		return pessoaRepository.buscarPorNomeIlike(nome, pageable);
 	}
 
+	//TODO utilizar esse cara no translator para melhorar a perfomance
+	//quando o front estiver  pronto
+	@SuppressWarnings("unused")
 	private List<PessoaVO> traduzirPessoaListToVOList(List<Pessoa> pessoas) {
 		List<PessoaVO> pessoasVO = new ArrayList<PessoaVO>(pessoas.size());
 		

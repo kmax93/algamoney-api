@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.algamoney.algamoneyapi.pessoa.model.Pessoa;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
+public interface PessoaRepository extends JpaRepository<Pessoa, Long>, PessoaRepositoryQuery {
 
 }

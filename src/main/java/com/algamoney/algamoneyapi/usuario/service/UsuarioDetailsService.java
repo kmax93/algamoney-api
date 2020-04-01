@@ -6,12 +6,12 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.algamoney.algamoneyapi.usuario.UsuarioLogado;
 import com.algamoney.algamoneyapi.usuario.exception.UsuarioNaoEcontradoException;
 import com.algamoney.algamoneyapi.usuario.model.Usuario;
 
@@ -30,7 +30,7 @@ public class UsuarioDetailsService implements UserDetailsService {
 			
 			Usuario usuario = usuarioService.findByLogin(login);
 			
-			return new User(login, usuario.getSenha(), getPermissoes(usuario));
+			return new UsuarioLogado(usuario, getPermissoes(usuario));
 			
 		} catch (UsuarioNaoEcontradoException e) {
 			throw new UsernameNotFoundException(login, e);
